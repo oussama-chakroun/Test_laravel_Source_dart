@@ -3,7 +3,7 @@ Teste laravel Source dart
 
 # Note
 after cloning project you need to execute commands
-cd Teste_laravel_Source_dart
+=> cd Teste_laravel_Source_dart
 composer install 
 # after instaling to run project 
 php artisan serve
