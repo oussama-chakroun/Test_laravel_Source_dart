@@ -34,7 +34,7 @@ php artisan app:delete-category 'product1' || or || php artisan app:add-category
 
 # Concepte de la application
 
-Nous avons deux catégories de tables et produit la relation entre eux est plusieurs à plusieurs .
+Nous avons deux tables catégories et produit la relation entre eux est plusieurs à plusieurs .
 Dans cette application, nous pouvons contrôler toutes les informations des tables .
 
 # La première page => product
