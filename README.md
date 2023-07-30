@@ -40,12 +40,12 @@ Dans cette application, nous pouvons contrôler toutes les informations des tabl
 # La première page => product
 
 La première page nous permet de voir tous les produits avec la possibilité d'ajouter le produit,
-ainsi que de les trier par prix ou par nom, avec un moyen d'afficher les produits selon chaque catégorie.
+ainsi que de les trier par prix ou par nom, avec le option d'afficher les produits selon chaque catégorie.
 Bien sûr, avec la possibilité de modifier et de supprimer chaque produit, ainsi que de visualiser les catégories qui lui sont associées,
-ainsi que le contrôle des catégories associées au produit, telles que la suppression et l'ajout de catégories .
+ainsi que le contrôle des catégories associées au produit, telles que la suppression et l'ajout de catégories pour chaque produit déterminée .
 
 # La deuxième page => category
 
 La deuxième page nous permet de voir toutes les catégories existantes avec la possibilité d'ajouter la catégorie.  
 Bien sûr, avec la possibilité de modifier et de supprimer chaque catégorie, ainsi que de visualiser les produits qui y sont associés,
-ainsi que de les contrôler, comme la numérisation et l'ajout de produits pour chaque catégorie déterminée.
+ainsi que de les contrôler, comme la suppression et l'ajout de produits pour chaque catégorie déterminée.
