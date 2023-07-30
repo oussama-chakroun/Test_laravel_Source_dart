@@ -7,6 +7,8 @@ after cloning project you need to execute commands
 composer install 
 # after instaling to run project 
 php artisan serve
+# run the migration command to prepare database
+php artisan migrate
 
 # CLI 
 pour créer une catégorie depuis la ligne de commande => php artisan app:add-category << name (required) >> << parent_category (optional) >>
