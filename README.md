@@ -1,53 +1,66 @@
-# Teste_laravel_Source_dart
-Teste laravel Source dart
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-# Note
-after cloning project you need to execute commands
-=> cd Teste_laravel_Source_dart 
-=> composer install 
-# after instaling to run project 
-php artisan serve
-# run the migration command to prepare database
-php artisan migrate
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-# CLI 
-pour créer une catégorie depuis la ligne de commande => php artisan app:add-category << name (required) >> << parent_category (optional) >>
+## About Laravel
 
-# example
-php artisan app:add-category 'category1' || or || php artisan app:add-category 'category2' 'category1'
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-# CLI 
-pour supprimer une catégorie depuis la ligne de commande => php artisan app:delete-category << nameOrid (required) >>
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-# example
-php artisan app:delete-category 'category1' || or || php artisan app:add-category 1
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-# CLI 
-pour créer une produit depuis la ligne de commande => php artisan app:add-product << name (required) >> << description (required) >> << price (required - decimal) >> << image (required) >>
+## Learning Laravel
 
-# example
-php artisan app:add-product 'product1' 'product description' 75 'image1.png'
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-# CLI 
-pour supprimer une produit depuis la ligne de commande => php artisan app:delete-product << nameOrid (required) >>
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-# example
-php artisan app:delete-category 'product1' || or || php artisan app:add-category 1
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-# Concepte de la application
+## Laravel Sponsors
 
-Nous avons deux tables catégories et produit la relation entre eux est plusieurs à plusieurs .
-Dans cette application, nous pouvons contrôler toutes les informations des tables .
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-# La première page => product
+### Premium Partners
 
-La première page nous permet de voir tous les produits avec la possibilité d'ajouter le produit,
-ainsi que de les trier par prix ou par nom, avec le option d'afficher les produits selon chaque catégorie.
-Bien sûr, avec la possibilité de modifier et de supprimer chaque produit, ainsi que de visualiser les catégories qui lui sont associées,
-ainsi que le contrôle des catégories associées au produit, telles que la suppression et l'ajout de catégories pour chaque produit déterminée .
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[OP.GG](https://op.gg)**
+- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+- **[Lendio](https://lendio.com)**
 
-# La deuxième page => category
+## Contributing
 
-La deuxième page nous permet de voir toutes les catégories existantes avec la possibilité d'ajouter la catégorie.  
-Bien sûr, avec la possibilité de modifier et de supprimer chaque catégorie, ainsi que de visualiser les produits qui y sont associés,
-ainsi que de les contrôler, comme la suppression et l'ajout de produits pour chaque catégorie déterminée.
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
+## Code of Conduct
+
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

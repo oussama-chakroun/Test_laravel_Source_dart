@@ -3,38 +3,58 @@
 namespace App\Services ;
 
 use App\Models\Category;
+use App\Models\Product;
+use App\Repositories\CategoryRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryService
 {
-    public function getCategories($all = false){
 
-        if($all)
 
-            return Category::all();
+    /**
+     * CategoryService constructor.
+     */
+    public function __construct(protected CategoryRepository $categoryRepository)
+    {
+    }
+    /**
+     * get Categories with condition if with pagination or not.
+     */
+    public function getCategories(bool $paginate = false) : LengthAwarePaginator|Collection|array
+    {
+        if ($paginate){
+            return $this->categoryRepository->getWithPaginate(10) ;
+        }
+        else{
+            return $this->categoryRepository->getAll() ;
+        }
 
-        else 
-
-            return Category::paginate(10) ;
+    }
+    /**
+     * store Category .
+     */
+    public function storeCategory(array $data) : void
+    {
+        $this->categoryRepository->storeCategory($data);
+    }
+    /**
+     * update Category .
+     */
+    public function updateCategory(array $new_data , Category $category) : void
+    {
+        $this->categoryRepository->updateCategory($new_data , $category);
+    }
+    /**
+     * delete Category .
+     */
+    public function deleteCategory(Category $category) : void
+    {
+        $this->categoryRepository->deleteCategory($category);
     }
 
-    public function createCategory($request){
-        $request->validate([
-            'name' => 'required' ,
-            'parent_category' => 'nullable|exists:App\Models\Category,id'
-        ]);
-
-        Category::create($request->all());
-    } 
-
-    public function updateCategory($request , $category){
-        $request->validate([
-            'name' => 'required' ,
-            'parent_category' => 'nullable|exists:App\Models\Category,id'
-        ]);
-       $category->update($request->all());
-    }
-
-    public function deleteCategory($category){
-        $category->delete();
+    public function detach_product_from_category(int $product_id,int $category_id)
+    {
+        dd($product_id);
     }
 }

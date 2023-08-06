@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group col-sm-4 ">
                     {{-- you can attach a category to product by this form --}}
-                    <form action="{{ route('category.attch-product-to-category' , $category) }}" method="POST" class='d-flex'>
+                    <form action="{{ route('category.attch-product-to-category' , $category->id) }}" method="POST" class='d-flex'>
                         @csrf
                         <select class="form-control w-50" id="exampleFormControlSelect1" name='product'>
                       <option value="">Select Product</option>
@@ -69,7 +69,7 @@
                         <td><img height="50px" src="{{ asset('images/product/'.$product->image) }}" /></td>
                         <td>
                             {{-- you can detach a product from category by this form --}}
-                            <form onsubmit="return confirm('Are you sure ?')" class="d-inline" action="{{ route('category.detach-product' , [ 'product_id' => $product , 'category_id' => $category ]) }}" method="POST">
+                            <form onsubmit="return confirm('Are you sure ?')" class="d-inline" action="{{ route('category.detach-product' , [ $product->id , $category->id ]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="delete" style="border: 0 ; background-color: transparent; color: red;" title="Delete" ><i
