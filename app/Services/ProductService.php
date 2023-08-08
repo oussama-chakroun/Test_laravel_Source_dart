@@ -16,7 +16,7 @@ class ProductService
     public function __construct(protected ProductRepository $productRepository)
     {
     }
-    
+
     /**
      * get Product with condition if with pagination or not.
      */
@@ -51,7 +51,7 @@ class ProductService
     public function storeProduct(array $data) : void
     {
         // Move Product Image to public folder
-        $destinationPath = 'images/product'; // setup path destination
+        $destinationPath = 'storage/images/product'; // setup path destination
         $productImage = time() . "." . $data['image']->extension(); // change the image name to a unique name to make sure that the name are not repeated 
         $data['image']->move(public_path($destinationPath),$productImage); // image will be moved in 'public/images/product'
         $data['image'] = $productImage;
@@ -68,14 +68,14 @@ class ProductService
     public function updateProduct(array $new_data , Product $product) : void
     {
         if(array_key_exists('image',$new_data)){
-            $existslImage = public_path('images/product/' . $product->image);
+            $existslImage = public_path('storage/images/product/' . $product->image);
             // check if the old image exists to deleted
             if (File::exists($existslImage)) {
 
                 File::delete($existslImage);
             }
             // Move the new Product Image to public folder
-            $destinationPath = 'images/product'; // setup path destination
+            $destinationPath = 'storage/images/product'; // setup path destination
             $productImage = time() . "." . $new_data['image']->extension(); // change the image name to a unique name to make sure that the name are not repeated 
             $new_data['image']->move(public_path($destinationPath),$productImage); // image will be moved in 'public/images/product'
             $new_data['image'] =  $productImage ;
@@ -90,7 +90,7 @@ class ProductService
     {
         // before deleting this product should delete the image with it
         if($product->image){
-            $existslImage = public_path('images/product/' . $product->image);
+            $existslImage = public_path('storage/images/product/' . $product->image);
             // check if image exists to deleted
             if (File::exists($existslImage)) {
                 File::delete($existslImage);

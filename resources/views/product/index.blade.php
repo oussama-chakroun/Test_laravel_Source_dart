@@ -71,7 +71,7 @@
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->price }}</td>
-                        <td><img height="50px" src="{{ asset('images/product/'.$product->image) }}" /></td>
+                        <td><img height="50px" src="{{ asset('storage/images/product/'.$product->image) }}" /></td>
                         <td>
                             {{-- show more information about this product like all categories belongsTo and also you can detach or attach category  --}}
                             <a href="{{ route('product.show' , $product) }}" class="view" title="View" data-toggle="tooltip"><i
