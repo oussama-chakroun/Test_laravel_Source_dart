@@ -40,12 +40,12 @@
                     <div class="imgfile">
                             <img src="{{ asset('images/product/'. $product->image) }}" alt="img"
                                 width="150" height="150" >
-                        <input type="file" hidden name="img"
+                        <input type="file" hidden name="image"
                             class="form-control" 
                             id="logo" onchange="loadFile(this.previousElementSibling,event);" />
                     </div>
                 </label>
-                @error('img')
+                @error('image')
                     <span class="text-danger error">{{ $message }}</span>
                 @enderror
             </div>

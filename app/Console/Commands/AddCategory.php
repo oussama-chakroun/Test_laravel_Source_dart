@@ -2,11 +2,15 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Console\Command;
 
 class AddCategory extends Command
 {
+    public function __construct(protected CategoryService $categoryService)
+    {
+        parent::__construct();
+    }
     /**
      * The name and signature of the console command.
      *
@@ -26,9 +30,9 @@ class AddCategory extends Command
      */
     public function handle()
     {
-        $args = $this->arguments();
+        $data = $this->arguments();
         try{
-            Category::create($args);
+            $this->categoryService->storeCategory($data);
             dd( "insert with success" );
 
         }catch(\Exception $e){

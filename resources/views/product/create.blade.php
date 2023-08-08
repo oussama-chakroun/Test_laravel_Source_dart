@@ -48,12 +48,12 @@
                     <div class="imgfile">
                             <img src="{{ asset('assets/img/defaultImgProduct.jpg') }}" alt="img"
                                 width="150" height="150" >
-                        <input type="file" hidden name="img"
-                            class="form-control" value="{{ old('img') }}"
+                        <input type="file" hidden name="image"
+                            class="form-control" value="{{ old('image') }}"
                             id="logo" onchange="loadFile(this.previousElementSibling,event);" />
                     </div>
                 </label>
-                @error('img')
+                @error('image')
                     <span class="text-danger error">{{ $message }}</span>
                 @enderror
             </div>

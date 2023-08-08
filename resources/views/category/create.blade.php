@@ -14,7 +14,7 @@
                   <option value="">Select Category</option>
                   
                   @foreach($categories as $category)
-                     <option value="{{ $category->id }}">{{ $category->name }}</option>
+                     <option @if(old('parent_category')==$category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
                   @endforeach
 
                 </select>

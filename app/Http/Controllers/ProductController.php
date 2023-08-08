@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Services\CategoryService;
 use App\Services\ProductService;
-use GuzzleHttp\Handler\Proxy;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -16,31 +18,27 @@ class ProductController extends Controller
      * for use the methods of the ProductService like createProduct , deleteProduct or getProducts inside ProductController;
      */
 
-    private $productService, $categoryService;
-
-    public function __construct(ProductService $productService, CategoryService $categoryService)
+    public function __construct(protected ProductService $productService,protected CategoryService $categoryService)
     {
-        $this->productService = $productService;
-        $this->categoryService = $categoryService;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request) : view
     {
+        $parameters = $request->all();
         // products to show in view with pagination
-        $products = $this->productService->getProducts($request);
-
+        $products = $this->productService->getProducts($paginate = true , $parameters);
         // categories to make a filter by selected category
-        $categories = $this->categoryService->getCategories($all = true);
+        $categories = $this->categoryService->getCategories();
         return view('product.index', compact('products', 'categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : view
     {
         $categories = $this->categoryService->getCategories();
         return view('product.create', compact('categories'));
@@ -49,10 +47,16 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request) : RedirectResponse
     {
-        $this->productService->createProduct($request);
-        return redirect()->route('product.index')->withSuccess('Product added with success');
+        // get all inputs except the _token field
+        $data = $request->except('_token');
+        try{
+            $this->productService->storeProduct($data);
+            return redirect()->route('product.index')->withSuccess('Product added with success');
+        } catch(\Exception $e){
+            return redirect()->route('product.index')->withError($e->getMessage());
+        }
     }
 
     /**
@@ -60,7 +64,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $categories = $product->categories;
+        // categories => it's for the categories belongs to this product
+        $categories = $product->categories()->paginate(10);
+        // items => it's all categories to be attached to this product ($product)
         $items = $this->categoryService->getCategories();
         return view('product.show', compact('product', 'categories', 'items'));
     }
@@ -76,56 +82,53 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product) : RedirectResponse
     {
-        $this->productService->updateProduct($request, $product);
-        return redirect()->route('product.index')->withSuccess('Product updated with success');
+        try{
+            // get all inputs except the _token field
+            $new_data = $request->except('_token');
+            $this->productService->updateProduct($new_data, $product);
+            return redirect()->route('product.index')->withSuccess('Product updated with success');
+        } catch(\Exception $e){
+            return redirect()->route('product.index')->withError($e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product) : RedirectResponse
     {
+        try {
+            $this->productService->deleteProduct($product);
+            return redirect()->route('product.index')->withSuccess('Product deleted with success');
+        } catch(\Exception $e){
+            return redirect()->route('product.index')->withError($e->getMessage());
+        }
 
-        $this->productService->deleteProduct($product);
-        return redirect()->route('product.index')->withSuccess('Product deleted with success');
     }
 
     // attach a category to a product by this method
-    public function attch_category_to_product(Request $request, $product_id)
+    public function attch_category_to_product(Request $request, $product_id) : RedirectResponse
     {
-
+        // check if the request has a product to be added
         if ($request->category) {
-
-            $product = Product::find($product_id);
-
-            // check this category to be added if already exists
-            if (!$product->categories->contains($request->category)) {
-
-                // and this is how we can attach a category to product
-                $product->categories()->attach($request->category);
-
-                return redirect()->back()->withSuccess('Category attached to this product with success');
-            } else {
-
-                return redirect()->back()->with(['warning' => 'Category already attached to this product !']);
-            }
+            $result = $this->productService->attch_category_to_product($product_id , $request->category);
         } else {
-
-            return redirect()->back()->withError('please select a category to be attached befor submiting !');
+            $result['error'] = 'please select a category to be attached before submiting !';
         }
+        return redirect()->back()->with($result);
     }
 
     // detache a category from a product by this method
-    public function detach_category_from_product($product_id, $category_id)
+    public function detach_category_from_product($product_id, $category_id) : RedirectResponse
     {
-
-        $product = Product::find($product_id);
-
-        // and this is how we can detqch a category from product
-        $product->categories()->detach($category_id);
-
-        return redirect()->back()->withSuccess('Category detached from this product with success');
+        try {
+            $this->productService->detach_category_from_product($product_id, $category_id);
+            return redirect()->back()->withSuccess('Category detached from this product with success');
+        }
+        catch(\Exception $e){
+            return redirect()->back()->withError($e->getMessage());
+        }
     }
 }

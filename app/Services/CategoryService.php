@@ -18,6 +18,7 @@ class CategoryService
     public function __construct(protected CategoryRepository $categoryRepository)
     {
     }
+    
     /**
      * get Categories with condition if with pagination or not.
      */
@@ -31,6 +32,15 @@ class CategoryService
         }
 
     }
+
+    /**
+     * get Category by id.
+     */
+    public function getCategoryById(int $id) : Category
+    {
+        return $this->categoryRepository->getCategoryById($id);
+    }
+
     /**
      * store Category .
      */
@@ -38,6 +48,7 @@ class CategoryService
     {
         $this->categoryRepository->storeCategory($data);
     }
+
     /**
      * update Category .
      */
@@ -45,6 +56,7 @@ class CategoryService
     {
         $this->categoryRepository->updateCategory($new_data , $category);
     }
+
     /**
      * delete Category .
      */
@@ -53,8 +65,20 @@ class CategoryService
         $this->categoryRepository->deleteCategory($category);
     }
 
-    public function detach_product_from_category(int $product_id,int $category_id)
+    /**
+     * attch product to category
+     */
+    public function attch_product_to_category(int $product_id,int $category_id) : array
     {
-        dd($product_id);
+        return $this->categoryRepository->attch_product_to_category($product_id , $category_id);
+
+    }
+
+    /**
+     * detach product from category .
+     */
+    public function detach_product_from_category(int $product_id,int $category_id) : void
+    {
+        $this->categoryRepository->detach_product_from_category($product_id , $category_id);
     }
 }

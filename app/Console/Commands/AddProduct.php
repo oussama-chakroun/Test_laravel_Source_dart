@@ -2,11 +2,15 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Console\Command;
 
 class AddProduct extends Command
 {
+    public function __construct(protected ProductService $productService)
+    {
+        parent::__construct();
+    }
     /**
      * The name and signature of the console command.
      *
@@ -26,11 +30,10 @@ class AddProduct extends Command
      */
     public function handle()
     {
-        $args = $this->arguments();
+        $data = $this->arguments();
         try{
-            Product::create($args);
+            $this->productService->storeProduct($data);
             dd( "insert with success" );
-
         }catch(\Exception $e){
             dd( "error" , $e->getMessage());
 

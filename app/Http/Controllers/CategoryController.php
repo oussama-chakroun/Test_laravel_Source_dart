@@ -6,18 +6,16 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\CategoryService;
+use App\Services\ProductService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-
-    private $categoryService;
-    
-    public function __construct(CategoryService $categoryService)
+ 
+    public function __construct(protected CategoryService $categoryService , protected ProductService $productService)
     {
-        $this->categoryService = $categoryService;
     }
 
     /**
@@ -60,8 +58,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category) : View
     {
-        $products = $category->products ;
-        $items = Product::all();
+        // products => it's for the products belongs to this category 
+        $products = $category->products()->paginate(10) ;
+        // items => it's all products to be attached to this category ($category)
+        $items = $this->productService->getProducts();
         return view('category.show' ,  compact('category' ,'products' ,'items'));
     }
 
@@ -107,37 +107,24 @@ class CategoryController extends Controller
     // attach a product to a caegory by this method
     public function attch_product_to_category(Request $request, $category_id) : RedirectResponse
     {
-
+        // check if the request has a product to be added
         if ($request->product) {
-
-            $category = Category::find($category_id);
-
-            // check this product to be added if already exists
-            if (!$category->products->contains($request->product)) {
-
-                // and this is how we can attach a product to category
-                $category->products()->attach($request->product);
-
-                return redirect()->back()->withSuccess('Product attached to this category with success');
-            } else {
-
-                return redirect()->back()->with(['warning' => 'Product already attached to this category !']);
-            }
+            $result = $this->categoryService->attch_product_to_category($request->product , $category_id);
         } else {
-
-            return redirect()->back()->withError('please select a product to be attached before submiting !');
+            $result['error'] = 'please select a product to be attached before submiting !';
         }
+        return redirect()->back()->with($result);
     }
 
     // detache a product from a category by this method
     public function detach_product_from_category($product_id, $category_id) : RedirectResponse
     {
-
-        $category = Category::find($category_id);
-
-        // and this is how we can detqch a category from product
-        $category->products()->detach($product_id);
-
-        return redirect()->back()->withSuccess('Category detached from this product with success');
+        try {
+            $this->categoryService->detach_product_from_category($product_id, $category_id);
+            return redirect()->back()->withSuccess('Category detached from this product with success');
+        }
+        catch(\Exception $e){
+            return redirect()->back()->withError($e->getMessage());
+        }
     }
 }
